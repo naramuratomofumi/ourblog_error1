@@ -8,6 +8,7 @@ class PostsController < ApplicationController
   end
 
   def create
+    binding.pry
     @post = Post.new(post_params)
     if @post.valid? #valid?によって、@postが正しく保存されるものなのかどうかを判断している。保存されるようであれば保存しルートパスへ。保存できないものであれば、新規投稿ページに戻っている
       @post.save
@@ -43,6 +44,6 @@ class PostsController < ApplicationController
 
   private
   def post_params
-    params.permit(:title, :content).merge(user_id: current_user.id)
+    params.require(:post).permit(:title, :content).merge(user_id: current_user.id)
   end
 end
